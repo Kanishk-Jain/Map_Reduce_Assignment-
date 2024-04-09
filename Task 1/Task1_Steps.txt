@@ -1,0 +1,29 @@
+Step1: RDS Instance creation
+Step2: Goto security group -> Goto Edit Inbound rule->All TCP ->MyIP
+Step3: Goto Putty -> Copy Primary node public DNS -> Goto SSH -> Goto Authentication -> Uploaded the ppk file
+Step4: Logged on to EMR instance -> Enter username ->execute below command
+wget https://nyc-tlc-upgrad.s3.amazonaws.com/yellow_tripdata_2017-01.csv
+wget https://nyc-tlc-upgrad.s3.amazonaws.com/yellow_tripdata_2017-02.csv
+Step5: Install SQL ->Execute below commands
+wget https://de-mysql-connector.s3.amazonaws.com/mysql-connector-java-8.0.25.tar.gz
+tar -xvf mysql-connector-java-8.0.25.tar.gz
+cd mysql-connector-java-8.0.25/
+sudo cp mysql-connector-java-8.0.25.jar /usr/lib/sqoop/lib/
+
+Step6: mysql -h demodb.creoyuw4qfr6.us-east-1.rds.amazonaws.com -P 3306 -u admin -p
+Step7: Execute below command
+LOAD DATA LOCAL INFILE '/home/hadoop/yellow_tripdata_2017-01.csv' INTO TABLE trip_log
+FIELDS TERMINATED BY ',' LINES TERMINATED BY '\n' IGNORE 1 LINES;
+LOAD DATA LOCAL INFILE '/home/hadoop/yellow_tripdata_2017-02.csv' INTO TABLE trip_log
+FIELDS TERMINATED BY ',' LINES TERMINATED BY '\n' IGNORE 1 LINES;
+
+Step8: create database taxi_records;
+Step9: Use taxi_records;
+Step10: CREATE TABLE trip_log
+(VendorID INT, tpep_pickup_datetime VARCHAR(50), tpep_dropoff_datetime VARCHAR(50),
+Passenger_count INT, Trip_distance FLOAT, RatecodeID INT, store_and_fwd_flag VARCHAR(2),
+PULocationID INT, DOLocationID INT, payment_type INT, fare_amount FLOAT, extra FLOAT,
+mta_tax FLOAT, tip_amount FLOAT, tolls_amount FLOAT, improvement_surcharge FLOAT,
+total_amount FLOAT, Airport_fee FLOAT );
+Step11: Checking the final counts using below sql commands
+select count(*) from taxi_records.trip_log;
