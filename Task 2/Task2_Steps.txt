@@ -1,0 +1,13 @@
+Step1: LOAD DATA LOCAL INFILE '/home/hadoop/yellow_tripdata_2017-03.csv' INTO TABLE trip_log
+FIELDS TERMINATED BY ',' LINES TERMINATED BY '\n' IGNORE 1 LINES;
+Step2: LOAD DATA LOCAL INFILE '/home/hadoop/yellow_tripdata_2017-04.csv' INTO TABLE trip_log
+FIELDS TERMINATED BY ',' LINES TERMINATED BY '\n' IGNORE 1 LINES;
+Step3: Execute the below command on hadoop
+sqoop import --connect jdbc:mysql://demodb.crog2ckcif6b.us-east-1.rds.amazonaws.com/taxi_records --username admin --password admin123 --table trip_log --hbase-table trip_log_hbase --column-family cf1 --hbase-create-table --hbase-row-key tpep_pickup_datetime,tpep_dropoff_datetime --hbase-bulkload --split-by payment_type
+Step4: Execute below commands
+sudo -i
+cd hbase
+hbase shell
+list
+describe 'trip_log_hbase'
+count 'trip_log_hbase'
