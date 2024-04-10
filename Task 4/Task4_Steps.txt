@@ -1,0 +1,14 @@
+
+Step1: pip install mrjob
+Step2: Running MapReduce Job using python script. Follow below commands
+Step3: vi Question1.py
+---------------------------------------
+Enter Python script
+---------------------------------------
+Step4: vi Question1.txt
+---------------------------------------
+Enter the same Python script
+---------------------------------------
+Step5: Execute below command
+python Question1.py yellow_tripdata_2017-01.csv > Question1.txt
+Step6: Repeat step 3 to 5 for remaining datasets
